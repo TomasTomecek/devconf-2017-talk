@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/solarized.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Printing and PDF exports -->
+    <script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Containerization</h1>
+          <h2>worst practices</h2>
+          <p>
+          <span>Tomáš Tomeček</span>
+          </p>
+        </section>
+
+        <section>
+          <h2>Agenda</h2>
+          <ol>
+            <li>Worst practices.</li>
+            <li>Best practices.</li>
+          </ol>
+        </section>
+
+        <section data-background-color="#ff0000">
+          <h1 class="black-text">
+            Do not try this at home!
+          </h1>
+        </section>
+
+        <section>
+          <p>Let's create a container image for nginx webserver.</p>
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Content</h2>
+          <ul>
+            <li class="fragment">Base image</li>
+            <li class="fragment">The software itself</li>
+          </ul>
+          <aside class="notes">
+            <ul>
+              <li>Distribution, company</li>
+              <li>Support, up to date content, CVEs</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Content II</h2>
+          <code class="fragment"><pre>
+FROM random-image:0.0.1
+RUN curl -s https://gist.githubusercontent.com/TomasTomecek/d3dded10e231af8bd288667bf93b8d3f/raw/84ce758212e8532653b8903a0a679e68d0420a24/install_nginx.sh \
+    | sh
+          </pre></code>
+          <code class="fragment"><pre>
+FROM random-image:0.0.1
+RUN curl -s http://bit.ly/2jADUWC | sh
+          </pre></code>
+        </section>
+
+        <section>
+          <h2>Configuration</h2>
+          <ul>
+            <li class="fragment">Generic vs. specific</li>
+            <li class="fragment">Environment variables</li>
+            <li class="fragment">Configuration files</li>
+          </ul>
+          <code class="fragment"><pre>
+TODO
+          </pre></code>
+          <aside class="notes">
+            <ul>
+              <li>configuration files</li>
+              <li>runtime vs baked in</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Metadata</h2>
+          <ul>
+            <li class="fragment">What's inside?</li>
+            <li class="fragment">How can I use this?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Metadata II</h2>
+          <code class="fragment"><pre>
+LABEL description = ""
+LABEL name = ""
+          </pre></code>
+          <code class="fragment"><pre>
+LABEL description = "Best enterprise database ever!"
+LABEL name = "httpd"
+EXPOSE = 1234
+VOLUME = ["/var/lib/pgsql"]
+
+          </pre></code>
+        </section>
+
+        <section>
+          <h2>Image size</h2>
+          <ul>
+            <li class="fragment">Layers</li>
+            <li class="fragment">Redundant data</li>
+            <li class="fragment">Redundant services</li>
+          </ul>
+          <code class="fragment"><pre>
+          </pre></code>
+          <aside class="notes">
+            <ul>
+              <li>Lego: 10 pieces, every piece on their own is pretty useless, together they form a nice tower</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Image size II</h2>
+          <code class="fragment"><pre>
+RUN dnf install -y ssh
+RUN dnf install -y supervisord
+RUN dnf install -y man-db zsh tmux git nyancat
+ADD ./files/nginx.conf /etc/nginx/nginx.conf
+ADD ./files/supervisord.conf /etc/supervisord.conf
+          </pre></code>
+          <aside class="notes">
+            <ul>
+              <li>useless software, cache, one file per layer</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Security</h2>
+          <ul>
+            <li class="fragment">Yes or no?</li>
+            <li class="fragment">Let's play a game then!</li>
+          </ul>
+          <aside class="notes">
+            <ul>
+              <li>Security, yes or no?</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-background-color="#00ff00">
+          <h1 class="black-text">
+            Best practices
+          </h1>
+          <p>
+          Do try this at home please!
+          </p>
+        </section>
+
+        <section>
+          <h2>Yuck!</h2>
+          TODO: show dockerfile and comment it
+          <aside class="notes">
+            <ul>
+              <li>Pick trusted base image.</li>
+              <li>Compiling from sources is overkill usually.</li>
+              <li>You trust your distribution, right?</li>
+              <li>Configuration via env vars has best UX.</li>
+              <li>Templating is fine too.</li>
+              <li>Overlaying is also fine.</li>
+              <li>Just be sure what's inside!</li>
+              <li>And it suits you.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Yuck! II</h2>
+          TODO: show dockerfile and comment it
+          <aside class="notes">
+            <ul>
+              <li>Descriptive images are nice images.</li>
+              <li>Documentation is golden.</li>
+              <li>Size matters</li>
+              <li>Images may pile on</li>
+              <li>Chain instructions</li>
+              <li>Share layers</li>
+              <li>Do not carry rubbish.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Yuck! III</h2>
+          TODO: show dockerfile and comment it
+          <aside class="notes">
+            <ul>
+              <li>Security</li>
+              <li>Maybe squash</li>
+              <li>SELinux!</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Questions are welcome!</h2>
+          <ul style="list-style-type: none;">
+            <li><span class="fa fa-github-square"></span> TomasTomecek/devconf-2017-talk</li>
+            <li><span class="fa fa-github-square"></span> TomasTomecek/crack-this-container</li>
+            <li><span class="fa fa-twitter-square"></span> @TomasTomec</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+// More info https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+  history: true,
+  slideNumber: true,
+  transition: 'none',
+
+  // More info https://github.com/hakimel/reveal.js#dependencies
+  dependencies: [
+  { src: 'plugin/markdown/marked.js' },
+  { src: 'plugin/markdown/markdown.js' },
+  { src: 'plugin/notes/notes.js', async: true },
+  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+  ]
+});
+    </script>
+  </body>
+</html>

