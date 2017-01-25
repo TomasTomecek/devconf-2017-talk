@@ -51,7 +51,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
         </section>
 
         <section>
-          <p>Let's create a container image for nginx webserver.</p>
+          <p>Let's create thg <i>worst</i> container image for nginx webserver.</p>
           <aside class="notes">
             <ul>
               <li></li>
@@ -77,31 +77,40 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <h2>Content II</h2>
           <code class="fragment"><pre>
 FROM random-image:0.0.1
-RUN curl -s https://gist.githubusercontent.com/TomasTomecek/d3dded10e231af8bd288667bf93b8d3f/raw/84ce758212e8532653b8903a0a679e68d0420a24/install_nginx.sh \
+RUN curl -sL https://gist.githubusercontent.com/TomasTomecek/d3dded10e231af8bd288667bf93b8d3f/raw/84ce758212e8532653b8903a0a679e68d0420a24/install_nginx.sh \
     | sh
           </pre></code>
           <code class="fragment"><pre>
 FROM random-image:0.0.1
-RUN curl -s http://bit.ly/2jADUWC | sh
+RUN curl -sL http://bit.ly/2jUyDq9 | sh
           </pre></code>
         </section>
 
         <section>
-          <h2>Configuration</h2>
+          <h2>Runtime</h2>
           <ul>
-            <li class="fragment">Generic vs. specific</li>
-            <li class="fragment">Environment variables</li>
-            <li class="fragment">Configuration files</li>
+            <li class="fragment">Configuration</li>
+            <li class="fragment">Starting the service</li>
           </ul>
-          <code class="fragment"><pre>
-TODO
-          </pre></code>
           <aside class="notes">
             <ul>
-              <li>configuration files</li>
               <li>runtime vs baked in</li>
+              <li>environment variables</li>
+              <li>configuration files</li>
+              <li>run with executable</li>
+              <li>run with script</li>
             </ul>
           </aside>
+        </section>
+
+        <section>
+          <h2>Runtime II</h2>
+          <code class="fragment"><pre>
+
+          </pre></code>
+          <code class="fragment"><pre>
+CMD echo "container has started" && /usr/bin/supervisord
+          </pre></code>
         </section>
 
         <section>
@@ -121,6 +130,7 @@ LABEL name = ""
           <code class="fragment"><pre>
 LABEL description = "Best enterprise database ever!"
 LABEL name = "httpd"
+LABEL version = "1"
 EXPOSE = 1234
 VOLUME = ["/var/lib/pgsql"]
 
@@ -168,6 +178,32 @@ ADD ./files/supervisord.conf /etc/supervisord.conf
           <aside class="notes">
             <ul>
               <li>Security, yes or no?</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Let's play a game</h2>
+          <p>
+          We are an open source company Foo. Our software architects decided
+          that we will containerize our products. Our junior engineer, John
+          Bar, did a lot of work on our main product, a django application.
+          John pushed the container image to Docker hub and is looking for a
+          review!
+          </p>
+          <aside class="notes">
+            <ul>
+              <li></li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h2>Let's play a game</h2>
+          <a href="http://172.20.0.2:8000/">The game</a>
+          <aside class="notes">
+            <ul>
+              <li></li>
             </ul>
           </aside>
         </section>

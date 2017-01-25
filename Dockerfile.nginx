@@ -1,3 +1,14 @@
 FROM tomastomecek/random-image:0.0.1
-RUN curl -s http://bit.ly/2jADUWC | sh
+RUN curl -sL http://bit.ly/2jUyDq9 | sh
 
+LABEL description = "Best enterprise database ever!"
+LABEL name = "httpd"
+LABEL version = "1"
+EXPOSE 1234
+VOLUME ["/var/lib/pgsql"]
+
+RUN dnf install -y supervisor
+RUN dnf install -y openssh-server
+ADD files/supervisord.conf /etc/supervisord.d/container.ini
+
+CMD echo "root:password" | chpasswd && /usr/bin/supervisord
