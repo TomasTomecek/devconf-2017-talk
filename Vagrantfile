@@ -8,7 +8,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.define :worst_builder do |vagrant_host|
     # Box name
-    vagrant_host.vm.box = "projectatomic/adb"
+    # vagrant_host.vm.box = "projectatomic/adb"
+    vagrant_host.vm.box = "fedora/25-cloud-base"
     vagrant_host.vm.hostname = "worst"
     
     config.vm.synced_folder "./", "/home/vagrant/sync/", type: "rsync",
