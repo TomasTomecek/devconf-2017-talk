@@ -54,7 +54,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
           <p>Let's create thg <i>worst</i> container image for nginx webserver.</p>
           <aside class="notes">
             <ul>
-              <li></li>
+              <li>Are you ready?</li>
             </ul>
           </aside>
         </section>
@@ -84,6 +84,12 @@ RUN curl -sL https://gist.githubusercontent.com/TomasTomecek/d3dded10e231af8bd28
 FROM random-image:0.0.1
 RUN curl -sL http://bit.ly/2jUyDq9 | sh
           </pre></code>
+          <aside class="notes">
+            <ul>
+              <li>popular base image</li>
+              <li>script which installs the software to this new system</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
@@ -106,7 +112,7 @@ RUN curl -sL http://bit.ly/2jUyDq9 | sh
         <section>
           <h2>Runtime II</h2>
           <code class="fragment"><pre>
-CMD echo "container has started" && /usr/bin/supervisord
+CMD echo "container has started" && nginx -g "daemon off;"
           </pre></code>
         </section>
 
@@ -116,22 +122,25 @@ CMD echo "container has started" && /usr/bin/supervisord
             <li class="fragment">What's inside?</li>
             <li class="fragment">How can I use this?</li>
           </ul>
+          <aside class="notes">
+            <ul>
+              <li>We understand it right now, how about in a year?</li>
+              <li>what about others?</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
           <h2>Metadata II</h2>
           <code class="fragment"><pre>
 LABEL description = ""
-LABEL name = ""
-          </pre></code>
+LABEL name = ""</pre></code>
           <code class="fragment"><pre>
 LABEL description = "Best enterprise database ever!"
 LABEL name = "httpd"
 LABEL version = "1"
 EXPOSE = 1234
-VOLUME = ["/var/lib/pgsql"]
-
-          </pre></code>
+VOLUME = ["/var/lib/pgsql"]</pre></code>
         </section>
 
         <section>
@@ -144,6 +153,8 @@ VOLUME = ["/var/lib/pgsql"]
           <aside class="notes">
             <ul>
               <li>Lego: 10 pieces, every piece on their own is pretty useless, together they form a nice tower</li>
+              <li>layers are read-only</li>
+              <li>layers correspond to dockerfile instructions</li>
               <li>Build tooling, build artifacts, package manager, documentation, locale</li>
             </ul>
           </aside>
@@ -278,6 +289,8 @@ CMD ["/usr/sbin/nginx", "-g", "daemon off;"]</pre></code>
           <aside class="notes">
             <ul>
               <li>Security</li>
+              <li>not run as root</li>
+              <li>priviliges (reboot from a container)</li>
               <li>SELinux!</li>
             </ul>
           </aside>
